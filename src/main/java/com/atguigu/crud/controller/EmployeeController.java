@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.atguigu.crud.bean.Department;
+import com.atguigu.crud.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,8 +38,9 @@ public class EmployeeController {
 
 	@Autowired
 	EmployeeService employeeService;
-	
-	
+
+	@Autowired
+	DepartmentService departmentService;
 	/**
 	 * 单个批量二合一
 	 * 批量删除：1-2-3
@@ -222,6 +225,14 @@ public class EmployeeController {
 		model.addAttribute("pageInfo", page);
 
 		return "list";
+	}
+
+//	查询所有部门的信息
+	@ResponseBody
+	@RequestMapping("/depts")
+	public Msg getDepts(){
+		List<Department> departments = departmentService.getDepts();
+		return Msg.success().add("depts",departments);
 	}
 
 }

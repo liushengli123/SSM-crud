@@ -116,7 +116,7 @@
 		    <label class="col-sm-2 control-label">deptName</label>
 		    <div class="col-sm-4">
 		    	<!-- 部门提交部门id即可 -->
-		      <select class="form-control" name="dId">
+		      <select class="form-control" name="deptId">
 		      </select>
 		    </div>
 		  </div>
@@ -433,25 +433,27 @@
 			if($(this).attr("ajax-va")=="error"){
 				return false;
 			}
-			
+			// alert("hello");
 			//2、发送ajax请求保存员工
+			var data=$("#empAddModal form").serialize();
 			$.ajax({
 				url:"${APP_PATH}/emp",
 				type:"POST",
-				data:$("#empAddModal form").serialize(),
+				data:data,
+				dataType:'JSON',
 				success:function(result){
-					//alert(result.msg);
+					// alert(result.msg);
 					if(result.code == 100){
 						//员工保存成功；
 						//1、关闭模态框
-						$("#empAddModal").modal('hide');
-						
+						$("#empAddModal").modal("hide");
+
 						//2、来到最后一页，显示刚才保存的数据
 						//发送ajax请求显示最后一页数据即可
 						to_page(totalRecord);
 					}else{
 						//显示失败信息
-						//console.log(result);
+						console.log(result);
 						//有哪个字段的错误信息就显示哪个字段的；
 						if(undefined != result.extend.errorFields.email){
 							//显示邮箱错误信息
